@@ -1,0 +1,11 @@
+{
+  "PersistenceProviderPackageConfigs": {
+    "PostgresPersistenceProviderPackage": {
+      "ConnectionInformation": {
+        "jdbcUrl": "jdbc:postgresql://{{ env_var("DATABASE_HOST", "postgresql") }}:{{ env_var("DATABASE_PORT", "5432") }}/{{ env_var("TWX_DATABASE_SCHEMA", "thingworx") }}",
+        "password": "{% if env_var("ENCRYPT_CREDENTIALS", "false") == "true" %}encrypt.db.password{% else %}{{ env_var("TWX_DATABASE_PASSWORD", "") }}{% endif %}",
+        "username": "{{ env_var("TWX_DATABASE_USERNAME", "") }}{% if env_var("IS_AZURE_POSTGRES", "false") == "true" %}@{{ env_var("DATABASE_HOST", "postgresql") }}{% endif %}"
+      }
+    }
+  }
+}

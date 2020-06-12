@@ -1,0 +1,121 @@
+{
+  "PlatformSettingsConfig": {
+    "BasicSettings": {
+      "BackupStorage": "{{ env_var("THINGWORX_BACKUP_STORAGE", "/ThingworxBackupStorage") }}",
+      "EnableBackup": {{ env_var("ENABLE_BACKUP", "false") }},
+      "EnableClusteredMode": {{ env_var("ENABLE_CLUSTERED_MODE", "false") }},
+      "EnableHA": {{ env_var("ENABLE_HA", "false") }},
+      "EnableSystemLogging": {{ env_var("ENABLE_LOGGING", "true") }},
+      "Storage": "{{ env_var("THINGWORX_STORAGE", "/ThingworxStorage") }}",
+      "HTTPRequestHeaderMaxLength": {{ env_var("HTTP_REQUEST_HEADER_MAX_LENGTH", "2000") }},
+      "HTTPRequestParameterMaxLength": {{ env_var("HTTP_REQUEST_PARAMETER_MAX_LENGTH", "2000") }},
+      "EnableSSO": {{ env_var("ENABLE_SSO", "false") }},
+      {% if env_var("METRICS_REQUEST_URL", "") != "" %},
+      "MetricsRequestURL": "{{ env_var("METRICS_REQUEST_URL", "") }}",
+      "MetricsReportingUsername": "{{ env_var("METRICS_REPORTING_USERNAME", "") }}",
+      "MetricsReportingPassword": "{{ env_var("METRICS_REPORTING_PASSWORD", "") }}",
+      {% endif %}
+      "ScriptTimeout": {{ env_var("SCRIPT_TIMEOUT", "30") }}
+    },
+    "AdministratorUserSettings": {
+        "InitialPassword": "{{ env_var("THINGWORX_INITIAL_ADMIN_PASSWORD", "") }}"
+    },
+    "ClusteredModeSettings": {
+      "CoordinatorHosts": "{{ env_var("COORDINATOR_HOSTS", "") }}",
+      "LoadBalancerBase64EncodedCredentials": "QWRtaW5pc3RyYXRvcjp0clVmNnl1ejI/X0d1Yg==",
+      "PlatformId": "{{ env_var("PLATFORM_ID", "") }}"
+    },
+    "SCIMSettings": {
+        "enableSCIM": {{ env_var("ENABLE_SCIM", "false") }},
+        "autoStart": {{ env_var("SCIM_AUTOSTART", "false") }}
+    },
+    "HASettings": {
+        "CoordinatorConnectionTimeout": 10000,
+        "CoordinatorHosts": "{{ env_var("COORDINATOR_HOSTS", "127.0.0.1:2181") }}",
+        "CoordinatorMaxRetries": 3,
+        "CoordinatorRetryTimeout": 3000,
+        "CoordinatorSessionTimeout": 90000,
+        "LoadBalancerBase64EncodedCredentials": "QWRtaW5pc3RyYXRvcjp0clVmNnl1ejI/X0d1Yg=="
+    },
+    "OrchestrationSettings": {
+        "EnableOrchestration": {{ env_var("ENABLE_ORCHESTRATION", "false") }},
+        "QueueHost": "{{ env_var("RABBITMQ_HOST", "localhost") }}",
+        "QueuePort": {{ env_var("RABBITMQ_PORT", "5672") }},
+        "QueueName": "{{ env_var("RABBITMQ_QUEUE_NAME", "256mb") }}",
+        "QueueUsername": "{{ env_var("RABBITMQ_USERNAME", "symphuser") }}",
+        "QueuePassword": "{{ env_var("RABBITMQ_PASSWORD", "symphpass") }}",
+        "QueueVHost": "{{ env_var("RABBITMQ_VHOST", "symphony") }}",
+        "FlowUrl" : "{{ env_var("FLOW_URL", "https://flow.local.rnd.ptc.com/Thingworx/Flow") }}"
+    },
+    "PropertyTransformSettings": {
+        "EnablePropertyTransform": {{ env_var("ENABLE_PROPERTY_TRANSFORM", "false") }},
+        "QueueHost": "{{ env_var("PROPERTY_TRANSFORM_RABBITMQ_HOST", "localhost") }}",
+        "QueuePort": {{ env_var("PROPERTY_TRANSFORM_RABBITMQ_PORT", "5672") }},
+        "QueueUsername": "{{ env_var("PROPERTY_TRANSFORM_RABBITMQ_USERNAME", "admin") }}",
+        "QueuePassword": "{% if env_var("ENCRYPT_CREDENTIALS", "false") == "true" and env_var("PROPERTY_TRANSFORM_RABBITMQ_PASSWORD", "") != "" %}encrypt.propertytransform.password{% else %}{{ env_var("PROPERTY_TRANSFORM_RABBITMQ_PASSWORD", "") }}{% endif %}",
+        "QueueVHost": "{{ env_var("PROPERTY_TRANSFORM_RABBITMQ_VHOST", "/") }}"
+    },
+    "LicensingConnectionSettings": {
+      "username": "{{ env_var("LS_USERNAME", "") }}",
+      "password": "{% if env_var("ENCRYPT_CREDENTIALS", "false") == "true" and env_var("LS_PASSWORD", "") != "" %}encrypt.licensing.password{% else %}{{ env_var("LS_PASSWORD", "") }}{% endif %}"
+    },
+    "ExtensionPackageImportPolicy":	{
+      "importEnabled": {{ env_var("EXTPKG_IMPORT_POLICY_ENABLED", "false") }},
+      "allowJarResources": {{ env_var("EXTPKG_IMPORT_POLICY_ALLOW_JARRES", "false") }},
+      "allowJavascriptResources": {{ env_var("EXTPKG_IMPORT_POLICY_ALLOW_JSRES", "false") }},
+      "allowCSSResources": {{ env_var("EXTPKG_IMPORT_POLICY_ALLOW_CSSRES", "false") }},
+      "allowJSONResources": {{ env_var("EXTPKG_IMPORT_POLICY_ALLOW_JSONRES", "false") }},
+      "allowWebAppResources": {{ env_var("EXTPKG_IMPORT_POLICY_ALLOW_WEBAPPRES", "false") }},
+      "allowEntities": {{ env_var("EXTPKG_IMPORT_POLICY_ALLOW_ENTITIES", "false") }},
+      "allowExtensibleEntities": {{ env_var("EXTPKG_IMPORT_POLICY_ALLOW_EXTENTITIES", "false") }}
+    },
+    "ContentTypeSettings": {
+        "supportedMediaEntityContentTypes": [
+        "image/svg+xml",
+        "image/png",
+        "image/gif",
+        "image/bmp",
+        "image/jpeg",
+        "application/pdf",
+        "image/vnd.microsoft.icon"
+      ]
+    },
+	"SolutionCentralSettings": {
+	  "SolutionCentralHost":"{{env_var("SOLUTION_CENTRAL_HOST","sc.thingworx.com")}}",
+	  {% if env_var("SOLUTION_CENTRAL_PORT", "0") != "0" %}
+	  "SolutionCentralPort": {{ env_var("SOLUTION_CENTRAL_PORT", "0") }},
+	  {% endif %}
+	  "KeyStorePath":"{{env_var("SOLUTION_CENTRAL_KEYSTORE_PATH","/ThingworxPlatform/sc-keystore")}}",
+	  "KeyStorePass":"{% if env_var("ENCRYPT_CREDENTIALS", "false") == "true" and env_var("SOLUTION_CENTRAL_KEYSTORE_PASS", "") != "" %}encrypt.sc.keystore.password{% else %}{{ env_var("SOLUTION_CENTRAL_KEYSTORE_PASS", "") }}{% endif %}"
+	}
+  }
+
+{% if env_var("ENABLE_CLUSTERED_MODE", "false") == "true" %}
+  ,
+  "cache": {
+    "init-timeout": "30 seconds",
+    "provider-type": "com.thingworx.cache.ignite.IgniteCacheProvider",
+
+    "cache-mappings": {
+    },
+
+    "ignite": {
+        "instance-name": "twx-core-server",
+        "client-mode": true,
+        "address-resolver" : {
+          "type": "zookeeper",
+          "connection": "{{ env_var("IGNITE_ZK_CONNECTION", "") }}"
+        },
+
+        "caches": {
+            "default": {
+                "cache-mode": "PARTITIONED",
+                "atomicity-mode": "ATOMIC",
+                "backups": 1
+            }
+        }
+    }
+  }
+{% endif %}
+
+}

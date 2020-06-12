@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+    <!--
+     ********************
+     ****  LOGGERS ****
+     ********************
+    -->
+
+    <!-- communication logger -->
+    <logger name="CommunicationLog" level="INFO" additivity="false">
+        <appender-ref ref="ASYNC_APPENDER_COMMUNICATION"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </logger>
+
+    <!-- database logger -->
+    <logger name="DatabaseLog" level="INFO" additivity="false">
+        <appender-ref ref="ASYNC_APPENDER_DATABASE"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </logger>
+
+    <!-- configuration logger -->
+    <logger name="ConfigurationLog" level="ALL" additivity="false">
+        <appender-ref ref="ASYNC_APPENDER_CONFIGURATION"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </logger>
+
+    <!-- script error logger -->
+    <logger name="ScriptErrorLog" level="ALL" additivity="false">
+        <appender-ref ref="ASYNC_APPENDER_SCRIPT_ERROR"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </logger>
+
+    <!-- script logger -->
+    <logger name="ScriptLog" level="ALL" additivity="false">
+        <appender-ref ref="ASYNC_APPENDER_SCRIPT"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </logger>
+
+    <!-- security logger -->
+    <logger name="SecurityLog" level="ALL" additivity="false">
+        <appender-ref ref="ASYNC_APPENDER_SECURITY"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </logger>
+
+    <!-- error logger -->
+    <logger name="ErrorLog" level="ALL" additivity="false">
+        <appender-ref ref="ASYNC_APPENDER_ERROR"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </logger>
+
+    <!-- configure spring security loggers to go to security logger -->
+    <logger name="org.springframework.security" level="ALL" additivity="false">
+        <appender-ref ref="ASYNC_APPENDER_SECURITY"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </logger>
+
+    <logger name="org.springframework.jdbc" level="ALL" additivity="false">
+        <appender-ref ref="ASYNC_APPENDER_SECURITY"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </logger>
+
+    <logger name="com.ptc.eauth.identity" level="ALL" additivity="false">
+        <appender-ref ref="ASYNC_APPENDER_SECURITY"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </logger>
+
+    <logger name="com.thingworx" level="INFO" additivity="false">
+        <appender-ref ref="ASYNC_APPENDER_APPLICATION"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </logger>
+
+    <logger name="org" level="WARN" additivity="false">
+        <appender-ref ref="ASYNC_APPENDER_APPLICATION"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </logger>
+
+    <logger name="com" level="WARN" additivity="false">
+        <appender-ref ref="ASYNC_APPENDER_APPLICATION"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </logger>
+
+    <!--
+    top-level root logger uses the application appender.
+    -->
+    <root level="INFO">
+        <appender-ref ref="ASYNC_APPENDER_APPLICATION"/>
+        {% if env_var("ENABLE_CONSOLE_OUTPUT", "false") == "true" %}
+        <appender-ref ref="ASYNC_APPENDER_CONSOLE"/>
+        {% endif %}
+    </root>
+</configuration>

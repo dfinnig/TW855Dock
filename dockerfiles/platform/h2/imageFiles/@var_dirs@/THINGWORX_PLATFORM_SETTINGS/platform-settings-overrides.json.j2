@@ -1,0 +1,10 @@
+{
+  "PersistenceProviderPackageConfigs": {
+    "H2PersistenceProviderPackage": {
+      "ConnectionInformation": {
+        "password": "{% if env_var("ENCRYPT_CREDENTIALS", "false") == "true" %}encrypt.db.password{% else %}{{ env_var("TWX_DATABASE_PASSWORD", "") }}{% endif %}",
+        "username": "{{ env_var("TWX_DATABASE_USERNAME", "") }}"
+      }
+    }
+  }
+}
