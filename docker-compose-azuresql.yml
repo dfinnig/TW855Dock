@@ -1,0 +1,34 @@
+version: '2.2'
+
+services:
+  # NOTE: There is no test database for the ThingWorx Azure SQL Persitence Provider
+  # as you need to create a database resource in Azure to connect to.
+
+  platform:
+    image: thingworx/platform-azuresql:latest
+    healthcheck:
+      test: curl -f localhost:8080/Thingworx/health
+      interval: 15s
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      - "INITIAL_HEAP=2"
+      - "MAX_HEAP=4"
+      - "DATABASE_HOST=<azuresql url>"
+      # NOTE: Set DATABASE_ADMIN_USERNAME and DATABASE_ADMIN_PASSWORD if you want
+      # the docker container to create the user and database tables for ThingWorx
+      # based on TWX_DATABASE_USERNAME and TWX_DATABASE_PASSWORD.
+      # Otherwise, comment out and supply the TWX_DATABASE_USERNAME and TWX_DATABASE_PASSWORD
+      # for manually created user and ThingWorx database structure.
+      - "DATABASE_ADMIN_USERNAME=<azuresql admin user>"
+      - "DATABASE_ADMIN_PASSWORD=<azuresql admin password>"
+      # NOTE: Set TWX_DATABASE_USERNAME, TWX_DATABASE_PASSWORD TWX_DATABASE_SCHEMA for
+      # the thingworx database setup that will either be created by the docker image,
+      # or connected to if it already exists.
+      - "TWX_DATABASE_USERNAME="
+      - "TWX_DATABASE_SCHEMA="
+      - "TWX_DATABASE_PASSWORD="
+      # NOTE: The following must be set for the Platform to start. This will be
+      # the initial Administrator password.
+      - "THINGWORX_INITIAL_ADMIN_PASSWORD="

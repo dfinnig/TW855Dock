@@ -1,0 +1,36 @@
+version: '2.2'
+
+services:
+  mssql:
+    image: thingworx/mssql-db:latest
+    ports:
+      - "1433"
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -U SA -P "$${SA_PASSWORD}" -h -1 -Q "set nocount on; select serverproperty('ServerName')" | grep -w "$${HOSTNAME}"
+      interval: 15s
+
+  platform:
+    image: thingworx/platform-mssql:latest
+    healthcheck:
+      test: curl -f localhost:8080/Thingworx/health
+      interval: 15s
+    depends_on:
+      mssql:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      - "INITIAL_HEAP=2"
+      - "MAX_HEAP=4"
+      - "DATABASE_HOST=mssql"
+      - "DATABASE_PORT=1433"
+      # NOTE: Set TWX_DATABASE_USERNAME, TWX_DATABASE_PASSWORD TWX_DATABASE_SCHEMA for
+      # the thingworx database setup that will either be created by the docker image,
+      # or connected to if it already exists.
+      - "TWX_DATABASE_USERNAME="
+      - "TWX_DATABASE_SCHEMA="
+      - "TWX_DATABASE_PASSWORD="
+      # NOTE: The following must be set for the Platform to start. This will be
+      # the initial Administrator password.
+      - "THINGWORX_INITIAL_ADMIN_PASSWORD="

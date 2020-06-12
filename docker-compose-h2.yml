@@ -1,0 +1,21 @@
+version: '2.2'
+
+services:
+  platform:
+    image: thingworx/platform-h2:latest
+    healthcheck:
+      test: curl -f localhost:8080/Thingworx/health
+      interval: 15s
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      - "INITIAL_HEAP=2"
+      - "MAX_HEAP=4"
+      # NOTE: TWX_DATABASE_USERNAME and TWX_DATABASE_PASSWORD for H2 platform must
+      # be set to to create the initial database, or connect to a previous instance.
+      - "TWX_DATABASE_USERNAME="
+      - "TWX_DATABASE_PASSWORD="
+      # NOTE: The following must be set for the Platform to start. This will be
+      # the initial Administrator password.
+      - "THINGWORX_INITIAL_ADMIN_PASSWORD="
